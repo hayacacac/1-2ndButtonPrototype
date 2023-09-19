@@ -22,6 +22,10 @@ namespace Platformer.Mechanics
 
         int currentHP;
 
+        public int getCurrentHP(){
+            return currentHP;
+        }
+
         /// <summary>
         /// Increment the HP of the entity.
         /// </summary>

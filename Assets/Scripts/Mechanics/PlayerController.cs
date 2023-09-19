@@ -52,6 +52,9 @@ namespace Platformer.Mechanics
         private float cooldownTimer = 0f;
         public TMP_Text cooldownTextUI;
 
+        //体力UI
+        public TMP_Text HealthTextUI;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -82,6 +85,8 @@ namespace Platformer.Mechanics
 
             UpdateCooldownTimer();
 
+            UpdateHealthUI();
+
             //Eキーが押されたときに2分の1ボタンの処理
             if (Input.GetKeyDown(KeyCode.E)){
                 ButtonAction();
@@ -104,6 +109,10 @@ namespace Platformer.Mechanics
 
                 cooldownTimer = cooldownTime;
             }
+        }
+
+        private void UpdateHealthUI(){
+            HealthTextUI.text = "HP: " + health.getCurrentHP().ToString();
         }
 
         private void UpdateCooldownTimer(){
@@ -135,7 +144,7 @@ namespace Platformer.Mechanics
 
         private void Guard(){
             //盾生成位置のオフセット
-            Vector3 offset = new Vector3(0.4f,0,0);
+            Vector3 offset = new Vector3(0.5f,0,0);
             float shieldTimeSec = 3f;
 
             //左向きの時は盾の方向を逆にする
