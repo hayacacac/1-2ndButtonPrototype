@@ -74,18 +74,21 @@ namespace Platformer.Mechanics
 
             //Spaceキーが押されたときに弾丸発射
             if (Input.GetKeyDown(KeyCode.E)){
-                //弾丸生成位置を前にずらす
+                //弾丸生成位置のオフセット
                 Vector3 offset = new Vector3(0.5f,0,0);
-                
+                //弾丸の射出速度
+                float bulletSpeed = 10f;
+
+                //左向きの時は弾の方向を逆にする
                 if (spriteRenderer.flipX){
-                    GameObject bullet = Instantiate(bulletPrefab, transform.position-offset, transform.rotation);
-                    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                    rb.AddForce(-transform.right * 10f, ForceMode2D.Impulse);
-                } else{
-                    GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
-                    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                    rb.AddForce(transform.right * 10f, ForceMode2D.Impulse);
+                    offset *= -1;
+                    bulletSpeed *= -1;
                 }
+
+                //弾丸生成と発射
+                GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
             }
 
             base.Update();
