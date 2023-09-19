@@ -9,6 +9,51 @@ using Platformer.Core;
 
 namespace Platformer.Mechanics
 {
+    public class ButtonAction : KinematicObject
+    {
+        public virtual void Perform(PlayerController player){}
+    }
+
+    public class ShootBullet : ButtonAction
+    {
+        public override void Perform(PlayerController player){
+            //弾丸生成位置のオフセット
+            Vector3 offset = new Vector3(0.5f,0,0);
+            //弾丸の射出速度
+            float bulletSpeed = 10f;
+
+            //左向きの時は弾の方向を逆にする
+            if (player.getterFlipX()){
+                offset *= -1;
+                bulletSpeed *= -1;
+            }
+
+            //弾丸生成と発射
+            GameObject bullet = Instantiate(player.bulletPrefab, player.transform.position+offset, player.transform.rotation);
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
+        }
+    }
+
+    public class Guard : ButtonAction
+    {
+        public override void Perform(PlayerController player){
+            //盾生成位置のオフセット
+            Vector3 offset = new Vector3(0.0f,-0.05f,0);
+            float shieldTimeSec = 3f;
+            GameObject shield = Instantiate(player.shieldPrefab, player.transform.position+offset, player.transform.rotation, player.gameObject.transform);
+            StartCoroutine(DestroyGuard(shieldTimeSec, shield));
+        }
+
+        IEnumerator DestroyGuard(float waitTime, GameObject shield){
+            this.gameObject.tag = "Muteki";
+            yield return new WaitForSeconds(waitTime);
+            Destroy(shield);
+            this.gameObject.tag = "Player";
+        }
+    }
+
+
     /// <summary>
     /// This is the main class used to implement control of the player.
     /// It is a superset of the AnimationController class, but is inlined to allow for any kind of customisation.
@@ -49,6 +94,18 @@ namespace Platformer.Mechanics
         //確率
         [SerializeField, Range(0.0f, 1.0f)]
         public float AttackProb;
+
+        //アクション
+        public enum ActionType
+        {
+            Action1,
+            Action2,
+            Action3
+        }
+        [SerializeField] ActionType ActionA;
+        [SerializeField] ActionType ActionB;
+        private ButtonAction ActionInstanceA;
+        private ButtonAction ActionInstanceB;
 
         //クールダウン
         private bool isCooldown => cooldownTimer > 0f;
@@ -216,6 +273,10 @@ namespace Platformer.Mechanics
             animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
 
             targetVelocity = move * maxSpeed;
+        }
+
+        public bool getterFlipX(){
+            return spriteRenderer.flipX;
         }
 
         public enum JumpState
