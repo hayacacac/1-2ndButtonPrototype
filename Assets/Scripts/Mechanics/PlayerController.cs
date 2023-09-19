@@ -46,6 +46,10 @@ namespace Platformer.Mechanics
         public GameObject bulletPrefab;
         public GameObject shieldPrefab;
 
+        //確率
+        [SerializeField, Range(0.0f, 1.0f)]
+        public float AttackProb;
+
         //クールダウン
         private bool isCooldown => cooldownTimer > 0f;
         public float cooldownTime = 5f;
@@ -101,7 +105,7 @@ namespace Platformer.Mechanics
                 // 0から1までのランダムな値を生成
                 float randomValue = Random.value; 
                 
-                if (randomValue < 0.5f){
+                if (randomValue < AttackProb){
                     Attack();
                 } else {
                     Guard();
@@ -144,13 +148,8 @@ namespace Platformer.Mechanics
 
         private void Guard(){
             //盾生成位置のオフセット
-            Vector3 offset = new Vector3(0.5f,0,0);
+            Vector3 offset = new Vector3(0.0f,-0.05f,0);
             float shieldTimeSec = 3f;
-
-            //左向きの時は盾の方向を逆にする
-            if (spriteRenderer.flipX){
-                offset *= -1;
-            }
             GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
             StartCoroutine(DestroyGuard(shieldTimeSec, shield));
         }
