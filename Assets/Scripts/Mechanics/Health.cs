@@ -57,10 +57,5 @@ namespace Platformer.Mechanics
         {
             currentHP = maxHP;
         }
-
-        void Update(){
-            Debug.Log(currentHP);
-            Debug.Log("isAlive: " + IsAlive);
-        }
     }
 }
