@@ -152,7 +152,14 @@ namespace Platformer.Mechanics
                 offset *= -1;
             }
             GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
-            Destroy(shield, shieldTimeSec);
+            StartCoroutine(DestroyGuard(shieldTimeSec, shield));
+        }
+
+        IEnumerator DestroyGuard(float waitTime, GameObject shield){
+            this.gameObject.tag = "Muteki";
+            yield return new WaitForSeconds(waitTime);
+            Destroy(shield);
+            this.gameObject.tag = "Player";
         }
 
         void UpdateJumpState()
