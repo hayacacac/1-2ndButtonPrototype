@@ -33,13 +33,19 @@ namespace Platformer.Mechanics
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            var player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                var ev = Schedule<PlayerEnemyCollision>();
-                ev.player = player;
-                ev.enemy = this;
+            string collisionTag = collision.gameObject.tag;
+            if (collisionTag == "Player"){
+                var player = collision.gameObject.GetComponent<PlayerController>();
+                if (player != null)
+                {
+                    var ev = Schedule<PlayerEnemyCollision>();
+                    ev.player = player;
+                    ev.enemy = this;
+                }
+            } else if (collisionTag == "Bullet"){
+                Schedule<EnemyDeath>().enemy = this;
             }
+            
         }
 
         void Update()

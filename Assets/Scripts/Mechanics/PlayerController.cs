@@ -42,6 +42,8 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
+        public GameObject bulletPrefab;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -69,6 +71,23 @@ namespace Platformer.Mechanics
                 move.x = 0;
             }
             UpdateJumpState();
+
+            //Spaceキーが押されたときに弾丸発射
+            if (Input.GetKeyDown(KeyCode.E)){
+                //弾丸生成位置を前にずらす
+                Vector3 offset = new Vector3(0.5f,0,0);
+                
+                if (spriteRenderer.flipX){
+                    GameObject bullet = Instantiate(bulletPrefab, transform.position-offset, transform.rotation);
+                    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                    rb.AddForce(-transform.right * 10f, ForceMode2D.Impulse);
+                } else{
+                    GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
+                    Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                    rb.AddForce(transform.right * 10f, ForceMode2D.Impulse);
+                }
+            }
+
             base.Update();
         }
 
