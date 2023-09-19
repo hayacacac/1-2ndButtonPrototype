@@ -39,9 +39,9 @@ namespace Platformer.Mechanics
             currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
             if (currentHP == 0)
             {
-                // var ev = Schedule<HealthIsZero>();
-                // ev.health = this;
-                Schedule<PlayerDeath>();
+                var ev = Schedule<HealthIsZero>();
+                ev.health = this;
+                //Schedule<PlayerDeath>();
             }
         }
 
@@ -56,6 +56,11 @@ namespace Platformer.Mechanics
         void Awake()
         {
             currentHP = maxHP;
+        }
+
+        void Update(){
+            Debug.Log(currentHP);
+            Debug.Log("IsAlive: " + IsAlive);
         }
     }
 }
