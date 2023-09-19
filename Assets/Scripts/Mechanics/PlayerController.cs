@@ -43,6 +43,7 @@ namespace Platformer.Mechanics
         public Bounds Bounds => collider2d.bounds;
 
         public GameObject bulletPrefab;
+        public GameObject shieldPrefab;
 
         void Awake()
         {
@@ -72,7 +73,7 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
 
-            //Spaceキーが押されたときに弾丸発射
+            //Eキーが押されたときに弾丸発射
             if (Input.GetKeyDown(KeyCode.E)){
                 //弾丸生成位置のオフセット
                 Vector3 offset = new Vector3(0.5f,0,0);
@@ -89,6 +90,20 @@ namespace Platformer.Mechanics
                 GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
                 rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
+            }
+
+            //Qキーが押されたときに盾生成
+            if (Input.GetKeyDown(KeyCode.Q)){
+                //盾生成位置のオフセット
+                Vector3 offset = new Vector3(0.4f,0,0);
+                float shieldTimeSec = 3f;
+
+                //左向きの時は盾の方向を逆にする
+                if (spriteRenderer.flipX){
+                    offset *= -1;
+                }
+                GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
+                Destroy(shield, shieldTimeSec);
             }
 
             base.Update();

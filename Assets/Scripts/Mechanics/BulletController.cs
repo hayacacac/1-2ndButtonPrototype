@@ -8,7 +8,6 @@ namespace Platformer.Mechanics
     {
         void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("aaa");
             Destroy(this.gameObject);            
         }
     }
