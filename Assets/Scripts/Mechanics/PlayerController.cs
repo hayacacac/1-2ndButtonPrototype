@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
@@ -45,6 +46,12 @@ namespace Platformer.Mechanics
         public GameObject bulletPrefab;
         public GameObject shieldPrefab;
 
+        //クールダウン
+        private bool isCooldown => cooldownTimer > 0f;
+        public float cooldownTime = 5f;
+        private float cooldownTimer = 0f;
+        public TMP_Text cooldownTextUI;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -73,40 +80,70 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
 
-            //Eキーが押されたときに弾丸発射
+            UpdateCooldownTimer();
+
+            //Eキーが押されたときに2分の1ボタンの処理
             if (Input.GetKeyDown(KeyCode.E)){
-                //弾丸生成位置のオフセット
-                Vector3 offset = new Vector3(0.5f,0,0);
-                //弾丸の射出速度
-                float bulletSpeed = 10f;
-
-                //左向きの時は弾の方向を逆にする
-                if (spriteRenderer.flipX){
-                    offset *= -1;
-                    bulletSpeed *= -1;
-                }
-
-                //弾丸生成と発射
-                GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
-                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
-            }
-
-            //Qキーが押されたときに盾生成
-            if (Input.GetKeyDown(KeyCode.Q)){
-                //盾生成位置のオフセット
-                Vector3 offset = new Vector3(0.4f,0,0);
-                float shieldTimeSec = 3f;
-
-                //左向きの時は盾の方向を逆にする
-                if (spriteRenderer.flipX){
-                    offset *= -1;
-                }
-                GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
-                Destroy(shield, shieldTimeSec);
+                ButtonAction();
             }
 
             base.Update();
+        }
+
+        private void ButtonAction(){
+            //ボタンの処理
+            if (isCooldown == false){
+                // 0から1までのランダムな値を生成
+                float randomValue = Random.value; 
+                
+                if (randomValue < 0.5f){
+                    Attack();
+                } else {
+                    Guard();
+                }
+
+                cooldownTimer = cooldownTime;
+            }
+        }
+
+        private void UpdateCooldownTimer(){
+            if(isCooldown){
+                cooldownTimer = Mathf.Clamp(cooldownTimer-Time.deltaTime, 0, cooldownTime);
+                cooldownTextUI.text = "Button: Cooldown " + cooldownTimer.ToString("F3") + "sec";
+            } else {
+                cooldownTextUI.text = "Button: Available";
+            }
+        }
+
+        private void Attack(){
+            //弾丸生成位置のオフセット
+            Vector3 offset = new Vector3(0.5f,0,0);
+            //弾丸の射出速度
+            float bulletSpeed = 10f;
+
+            //左向きの時は弾の方向を逆にする
+            if (spriteRenderer.flipX){
+                offset *= -1;
+                bulletSpeed *= -1;
+            }
+
+            //弾丸生成と発射
+            GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
+        }
+
+        private void Guard(){
+            //盾生成位置のオフセット
+            Vector3 offset = new Vector3(0.4f,0,0);
+            float shieldTimeSec = 3f;
+
+            //左向きの時は盾の方向を逆にする
+            if (spriteRenderer.flipX){
+                offset *= -1;
+            }
+            GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
+            Destroy(shield, shieldTimeSec);
         }
 
         void UpdateJumpState()
