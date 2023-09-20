@@ -43,21 +43,7 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
-        public GameObject bulletPrefab;
-        public GameObject shieldPrefab;
-
-        //確率
-        [SerializeField, Range(0.0f, 1.0f)]
-        public float AttackProb;
-
-        //クールダウン
-        private bool isCooldown => cooldownTimer > 0f;
-        public float cooldownTime = 5f;
-        private float cooldownTimer = 0f;
-        public TMP_Text cooldownTextUI;
-
-        //体力UI
-        public TMP_Text HealthTextUI;
+        public TMP_Text healthTextUI;
 
         void Awake()
         {
@@ -87,78 +73,25 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
 
-            UpdateCooldownTimer();
-
             UpdateHealthUI();
-
-            //Eキーが押されたときに2分の1ボタンの処理
-            if (Input.GetKeyDown(KeyCode.E)){
-                ButtonAction();
-            }
 
             base.Update();
         }
 
-        private void ButtonAction(){
-            //ボタンの処理
-            if (isCooldown == false){
-                // 0から1までのランダムな値を生成
-                float randomValue = Random.value; 
-                
-                if (randomValue < AttackProb){
-                    Attack();
-                } else {
-                    Guard();
-                }
-
-                cooldownTimer = cooldownTime;
-            }
+        //無敵状態にする
+        public void Muteki(float mutekiTimeSec){
+            StartCoroutine(MutekiCoroutine(mutekiTimeSec));
+        }
+        
+        //無敵状態にする時間を制御するコルーチン
+        IEnumerator MutekiCoroutine(float mutekiTimeSec){
+            this.gameObject.tag = "Muteki";
+            yield return new WaitForSeconds(mutekiTimeSec);
+            this.gameObject.tag = "Player";
         }
 
         private void UpdateHealthUI(){
-            HealthTextUI.text = "HP: " + health.getCurrentHP().ToString();
-        }
-
-        private void UpdateCooldownTimer(){
-            if(isCooldown){
-                cooldownTimer = Mathf.Clamp(cooldownTimer-Time.deltaTime, 0, cooldownTime);
-                cooldownTextUI.text = "Button: Cooldown " + cooldownTimer.ToString("F3") + "sec";
-            } else {
-                cooldownTextUI.text = "Button: Available";
-            }
-        }
-
-        private void Attack(){
-            //弾丸生成位置のオフセット
-            Vector3 offset = new Vector3(0.5f,0,0);
-            //弾丸の射出速度
-            float bulletSpeed = 10f;
-
-            //左向きの時は弾の方向を逆にする
-            if (spriteRenderer.flipX){
-                offset *= -1;
-                bulletSpeed *= -1;
-            }
-
-            //弾丸生成と発射
-            GameObject bullet = Instantiate(bulletPrefab, transform.position+offset, transform.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(transform.right * bulletSpeed, ForceMode2D.Impulse);
-        }
-
-        private void Guard(){
-            //盾生成位置のオフセット
-            Vector3 offset = new Vector3(0.0f,-0.05f,0);
-            float shieldTimeSec = 3f;
-            GameObject shield = Instantiate(shieldPrefab, transform.position+offset, transform.rotation, this.gameObject.transform);
-            StartCoroutine(DestroyGuard(shieldTimeSec, shield));
-        }
-
-        IEnumerator DestroyGuard(float waitTime, GameObject shield){
-            this.gameObject.tag = "Muteki";
-            yield return new WaitForSeconds(waitTime);
-            Destroy(shield);
-            this.gameObject.tag = "Player";
+            healthTextUI.text = "HP: " + health.getCurrentHP().ToString();
         }
 
         void UpdateJumpState()
@@ -216,6 +149,10 @@ namespace Platformer.Mechanics
             animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
 
             targetVelocity = move * maxSpeed;
+        }
+
+        public bool getterFlipX(){
+            return spriteRenderer.flipX;
         }
 
         public enum JumpState
