@@ -16,7 +16,8 @@ namespace Platformer.Mechanics
         public enum ActionList
         {
             ShootBullet,
-            Guard
+            Guard,
+            NullAction
         }
 
         public ActionList actionA;
@@ -25,6 +26,7 @@ namespace Platformer.Mechanics
         private ButtonAction myActionB;
 
         private PlayerController player;
+        public GameObject ActionManager;
 
         //確率
         [SerializeField, Range(0.0f, 1.0f)]
@@ -90,77 +92,17 @@ namespace Platformer.Mechanics
             switch (selectedAction)
             {
                 case ActionList.ShootBullet:
-                    action = new ShootBullet();
+                    action = ActionManager.GetComponent<ShootBullet>();
                     break;
                 case ActionList.Guard:
-                    action = new Guard();
+                    action = ActionManager.GetComponent<Guard>();
                     break;
                 default:
                     Debug.LogError("存在しないアクションが指定されました。");
-                    action = new NullAction();
+                    action = ActionManager.GetComponent<NullAction>();
                     break;
             }
-            return action;
-        }
-    }
-
-    /// <summary>
-    /// アクションの基底クラス
-    /// </summary>
-    public class ButtonAction
-    {
-        public virtual void Perform(PlayerController player){}
-    }
-
-    /// <summary>
-    /// 何もしないアクションのクラス。
-    /// 存在しないアクションが指定されたときに、代わりにこれが入る。
-    /// </summary>
-    public class NullAction : ButtonAction
-    {
-        public override void Perform(PlayerController player){
-            Debug.LogError("NullAction: 適切なアクションを設定してください。");
-        }
-    }
-
-    /// <summary>
-    /// 遠距離攻撃のクラス。弾を飛ばす。
-    /// </summary>
-    public class ShootBullet : ButtonAction
-    {
-        public override void Perform(PlayerController player){
-            //弾丸生成位置のオフセット
-            Vector3 offset = new Vector3(0.5f,0,0);
-            //弾丸の射出速度
-            float bulletSpeed = 10f;
-
-            //左向きの時は弾の方向を逆にする
-            if (player.getterFlipX()){
-                offset *= -1;
-                bulletSpeed *= -1;
-            }
-
-            //弾丸生成と発射
-            GameObject bullet = Object.Instantiate(player.bulletPrefab, player.transform.position+offset, player.transform.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(player.transform.right * bulletSpeed, ForceMode2D.Impulse);
-        }
-    }
-
-    /// <summary>
-    /// ガードのクラス。一定時間無敵
-    /// </summary>
-    public class Guard : ButtonAction
-    {
-        public override void Perform(PlayerController player){
-            //盾生成位置のオフセット
-            Vector3 offset = new Vector3(0.0f,-0.05f,0);
-            float shieldTimeSec = 3f;
-            GameObject shield = Object.Instantiate(player.shieldPrefab, player.transform.position+offset, player.transform.rotation, player.gameObject.transform);
-
-            // shieldTimeSec秒間だけ無敵&盾あり
-            Object.Destroy(shield, shieldTimeSec);
-            player.Muteki(shieldTimeSec);
+            return action ?? ActionManager.GetComponent<NullAction>();
         }
     }
 }

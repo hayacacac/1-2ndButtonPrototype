@@ -43,9 +43,6 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
-        public GameObject bulletPrefab;
-        public GameObject shieldPrefab;
-
         public TMP_Text healthTextUI;
 
         void Awake()
