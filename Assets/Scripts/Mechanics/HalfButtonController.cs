@@ -25,6 +25,7 @@ namespace Platformer.Mechanics
         {
             ShootBullet,
             Guard,
+            CloseAttack,
             NullAction
         }
         [Header("Action Settings")]
@@ -105,6 +106,9 @@ namespace Platformer.Mechanics
                     break;
                 case ActionList.Guard:
                     action = ActionManager.GetComponent<Guard>();
+                    break;
+                case ActionList.CloseAttack:
+                    action = ActionManager.GetComponent<CloseAttack>();
                     break;
                 default:
                     Debug.LogError("NullAction: 適切なアクションを設定してください。");

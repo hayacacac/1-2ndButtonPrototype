@@ -7,6 +7,8 @@ TagManager:
   - TutorialRequirement
   - Bullet
   - Muteki
+  - Cinemachine
+  - Enemy
   layers:
   - Default
   - TransparentFX

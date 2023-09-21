@@ -48,6 +48,14 @@ namespace Platformer.Mechanics
             
         }
 
+        void OnTriggerEnter2D(Collider2D other){
+            // プレイヤーに当たったら無視
+            if (other.CompareTag("Bullet"))
+            {
+                Schedule<EnemyDeath>().enemy = this;
+            }
+        }
+
         void Update()
         {
             if (path != null)
