@@ -23,13 +23,14 @@ namespace Platformer.Mechanics
             }
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        void OnTriggerEnter2D(Collider2D other)
         {
             // プレイヤーに当たったら無視
-            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Muteki"))
+            if (other.CompareTag("Player") || other.CompareTag("Muteki") || other.CompareTag("Cinemachine"))
             {
                 return;
             }
+            Debug.Log(other.gameObject.name);
 
             Destroy(this.gameObject); 
         }
