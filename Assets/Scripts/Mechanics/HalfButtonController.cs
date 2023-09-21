@@ -10,8 +10,16 @@ namespace Platformer.Mechanics
     /// </summary>
     public class HalfButtonController : MonoBehaviour
     {
+        [Header("Button Settings")]
         // ボタンが有効かどうかのフラグ
         public bool isEnable = true;
+
+        // 2分の1ボタンのキー
+        [SerializeField]
+        private KeyCode buttonKey;
+
+        // ボタン番号。複数置いたときに区別するために使う。
+        public int buttonNumber = 0;
 
         public enum ActionList
         {
@@ -19,7 +27,7 @@ namespace Platformer.Mechanics
             Guard,
             NullAction
         }
-
+        [Header("Action Settings")]
         public ActionList actionA;
         public ActionList actionB;
         private ButtonAction myActionA;
@@ -34,6 +42,7 @@ namespace Platformer.Mechanics
 
         //クールダウン
         private bool isCooldown => cooldownTimer > 0f;
+        [Header("Cooldown")]
         public float cooldownTime = 5f;
         private float cooldownTimer = 0f;
         public TMP_Text cooldownTextUI;
@@ -52,7 +61,7 @@ namespace Platformer.Mechanics
             UpdateCooldownTimer();
             
             //Eキーが押されたときに2分の1ボタンの処理
-            if (Input.GetKeyDown(KeyCode.E)){
+            if (Input.GetKeyDown(buttonKey)){
                 halfButtonAction();
             }
         }
@@ -61,9 +70,9 @@ namespace Platformer.Mechanics
         private void UpdateCooldownTimer(){
             if(isCooldown){
                 cooldownTimer = Mathf.Clamp(cooldownTimer-Time.deltaTime, 0, cooldownTime);
-                cooldownTextUI.text = "Button: Cooldown " + cooldownTimer.ToString("F3") + "sec";
+                cooldownTextUI.text = "Button"+ buttonNumber.ToString() +": Cooldown " + cooldownTimer.ToString("F3") + "sec";
             } else {
-                cooldownTextUI.text = "Button: Available";
+                cooldownTextUI.text = "Button"+ buttonNumber.ToString() +": Available";
             }
         }
 
@@ -98,7 +107,7 @@ namespace Platformer.Mechanics
                     action = ActionManager.GetComponent<Guard>();
                     break;
                 default:
-                    Debug.LogError("存在しないアクションが指定されました。");
+                    Debug.LogError("NullAction: 適切なアクションを設定してください。");
                     action = ActionManager.GetComponent<NullAction>();
                     break;
             }
