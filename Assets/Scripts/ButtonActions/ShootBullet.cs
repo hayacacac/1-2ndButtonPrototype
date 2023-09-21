@@ -16,18 +16,19 @@ namespace Platformer.Mechanics
         public override void Perform(PlayerController player){
             //弾丸生成位置のオフセット
             Vector3 offset = new Vector3(0.5f,0,0);
-            
+            // 左向きのときの斑点が複数かからないように毎回スピードを初期化
+            float speed = bulletSpeed;
 
             //左向きの時は弾の方向を逆にする
             if (player.getterFlipX()){
                 offset *= -1;
-                bulletSpeed *= -1;
+                speed *= -1;
             }
 
             //弾丸生成と発射
             GameObject bullet = Object.Instantiate(bulletPrefab, player.transform.position+offset, player.transform.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(player.transform.right * bulletSpeed, ForceMode2D.Impulse);
+            rb.AddForce(player.transform.right * speed, ForceMode2D.Impulse);
         }
     }
 }
