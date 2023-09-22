@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 1364969234}
-  fadeDuration: 1
+  transitionDestination: SampleScene
 --- !u!114 &1754070663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,3 +836,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f71c13c1d2ee3d45b0047d208c2fb94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 1
+  transitionDestination: SampleScene

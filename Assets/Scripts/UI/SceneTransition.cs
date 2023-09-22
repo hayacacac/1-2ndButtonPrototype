@@ -6,13 +6,25 @@ using UnityEngine.SceneManagement;
 
 namespace Platformer.UI
 {
+    /// <summary>
+    /// シーン遷移の処理を担うクラス
+    /// </summary>
     public class SceneTransition : MonoBehaviour
     {
-        public void StartTransition(Image fadePanel,float fadeDuration, string sceneName){
-            StartCoroutine(FadeOutAndLoadScene(fadePanel, fadeDuration, sceneName));
+        public float fadeDuration = 1f;
+        public string transitionDestination;
+
+        public void LoadScene(){
+            SceneManager.LoadScene(transitionDestination);
         }
 
-        private IEnumerator FadeOutAndLoadScene(Image fadePanel,float fadeDuration, string sceneName){
+        // シーン遷移(フェード)の開始
+        public void StartFadeTransition(Image fadePanel){
+            StartCoroutine(FadeOutAndLoadScene(fadePanel));
+        }
+
+        // フェードアウトしてからシーン遷移
+        private IEnumerator FadeOutAndLoadScene(Image fadePanel){
             fadePanel.enabled = true;
             float fadeTimer = 0f; 
             float startAlpha = 0f;
@@ -37,7 +49,7 @@ namespace Platformer.UI
             fadePanel.color = newColor;
 
             // シーンをロード
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(transitionDestination);
         }
     }
 }

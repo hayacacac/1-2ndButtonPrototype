@@ -5,24 +5,28 @@ using UnityEngine.UI;
 
 namespace Platformer.UI
 {
+    /// <summary>
+    /// タイトルシーンからゲームシーンへ遷移する入力を見るクラス
+    /// </summary>
     [RequireComponent(typeof(SceneTransition))]
     public class TitleSceneController : MonoBehaviour
     {
-        private bool isPushed = false;
+        private bool isPushed;
         public Image fadePanel; // フェード用のUIパネル（Image）
-        public float fadeDuration = 1.0f; // フェードの完了にかかる時間
+        public string transitionDestination = "SampleScene"; //遷移先
 
         private SceneTransition sceneTransition;
 
         void Start(){
             sceneTransition = GetComponent<SceneTransition>();
+            isPushed = false;
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !isPushed)
             {
-                if (!isPushed) sceneTransition.StartTransition(fadePanel, fadeDuration, "SampleScene");
+                sceneTransition.StartFadeTransition(fadePanel);
                 isPushed = true;
             }
         }
