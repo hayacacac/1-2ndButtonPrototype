@@ -31,7 +31,6 @@ namespace Platformer.Mechanics
         private Vector3 startPosition;
 
         private PlayerController playerController;
-        private Rigidbody2D playerRb;
 
         public override void Perform(PlayerController player){
             dashDirectionVector = GetDirectionVector(dashDirection);
@@ -47,14 +46,16 @@ namespace Platformer.Mechanics
             player.controlEnabled = false;
             
             isDashing = true;
+            dashTimer = 0f;
             playerController = player;
-            playerRb = player.GetComponent<Rigidbody2D>();
+
+            //ダッシュ中は無敵
+            player.Muteki(dashTime);
         }
 
         void Update(){
             // 動かす
             if(isDashing){
-                // playerController.velocity += dashDirectionVector;
                 playerController.PerformMovement(dashDirectionVector,true);
                 dashTimer += Time.deltaTime;
 
