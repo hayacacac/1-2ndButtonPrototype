@@ -26,6 +26,7 @@ namespace Platformer.Mechanics
             ShootBullet,
             Guard,
             CloseAttack,
+            Dash,
             NullAction
         }
         [Header("Action Settings")]
@@ -62,7 +63,7 @@ namespace Platformer.Mechanics
             UpdateCooldownTimer();
             
             //Eキーが押されたときに2分の1ボタンの処理
-            if (Input.GetKeyDown(buttonKey)){
+            if (player.controlEnabled && Input.GetKeyDown(buttonKey)){
                 halfButtonAction();
             }
         }
@@ -109,6 +110,9 @@ namespace Platformer.Mechanics
                     break;
                 case ActionList.CloseAttack:
                     action = ActionManager.GetComponent<CloseAttack>();
+                    break;
+                case ActionList.Dash:
+                    action = ActionManager.GetComponent<Dash>();
                     break;
                 default:
                     Debug.LogError("NullAction: 適切なアクションを設定してください。");
