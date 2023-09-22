@@ -12,6 +12,11 @@ namespace Platformer.Mechanics
         public float dashSpeed = 2f;
         public float dashTime = 0.04f;
         private float dashTimer = 0f;
+        //軌跡オブジェクトのプレハブ
+        public GameObject dashTrailPrefab;
+        private GameObject dashTrail;
+        //ダッシュ後に軌跡を消すまでの時間
+        public float trailTime = 0.5f;
         
         public enum DashDirectionList
         {
@@ -49,6 +54,9 @@ namespace Platformer.Mechanics
             dashTimer = 0f;
             playerController = player;
 
+            // ダッシュ中は軌跡を出す
+            dashTrail = Object.Instantiate(dashTrailPrefab, player.transform.position, player.transform.rotation, player.transform);
+
             //ダッシュ中は無敵
             player.Muteki(dashTime);
         }
@@ -64,6 +72,11 @@ namespace Platformer.Mechanics
                     isDashing = false;
                     playerController.controlEnabled = true;
                     dashTimer = 0f;
+                    
+                    //軌跡を切る
+                    dashTrail.transform.parent = null;
+                    //余韻を持たせて軌跡を消す
+                    Destroy(dashTrail, trailTime);
                 }
             }
         }
