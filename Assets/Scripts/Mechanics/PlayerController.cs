@@ -171,6 +171,17 @@ namespace Platformer.Mechanics
             return spriteRenderer.flipX;
         }
 
+        void OnCollisionEnter2D(Collision2D collision){
+            string collisionTag = collision.gameObject.tag;
+
+            // 敵の弾に当たったらダメージをくらう
+            if (collisionTag == "EnemyBullet"){
+                var enemyAttack = collision.gameObject.GetComponent<AttackObject>();
+                health.TakeDamage(enemyAttack.damage);
+                Muteki(3f);
+            }
+        }
+
         public enum JumpState
         {
             Grounded,
