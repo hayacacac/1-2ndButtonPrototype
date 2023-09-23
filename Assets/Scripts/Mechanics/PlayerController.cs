@@ -44,7 +44,9 @@ namespace Platformer.Mechanics
         public Bounds Bounds => collider2d.bounds;
 
         public TMP_Text healthTextUI;
-
+        private bool isMuteki;
+        private float mutekiCycle = 0.5f; //無敵時の点滅周期
+        private float mutekiTimer = 0f;
         void Awake()
         {
             health = GetComponent<Health>();
@@ -52,6 +54,8 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+
+            isMuteki = false;
         }
 
         protected override void Update()
@@ -73,6 +77,16 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
 
+            if(isMuteki){
+                mutekiTimer += Time.deltaTime;
+                // 周期cycleで繰り返す値を取得
+                var repeatValue = Mathf.Repeat(mutekiTimer, mutekiCycle);
+                // 点滅
+                spriteRenderer.enabled = repeatValue >= mutekiCycle * 0.5f;
+            } else if(isMuteki == false && spriteRenderer.enabled == false){
+                spriteRenderer.enabled = true;
+            }
+
             UpdateHealthUI();
 
             base.Update();
@@ -85,9 +99,11 @@ namespace Platformer.Mechanics
         
         //無敵状態にする時間を制御するコルーチン
         IEnumerator MutekiCoroutine(float mutekiTimeSec){
+            isMuteki = true;
             this.gameObject.tag = "Muteki";
             yield return new WaitForSeconds(mutekiTimeSec);
             this.gameObject.tag = "Player";
+            isMuteki = false;
         }
 
         private void UpdateHealthUI(){

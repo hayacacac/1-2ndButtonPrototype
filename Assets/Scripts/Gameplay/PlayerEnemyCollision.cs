@@ -49,6 +49,7 @@ namespace Platformer.Gameplay
             {
                 //Schedule<PlayerDeath>();
                 player.health.Decrement();
+                player.Muteki(3f);
                 player.Bounce(4);
             }
         }
