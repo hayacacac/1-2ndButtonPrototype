@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Platformer.Mechanics
 {
-    public class BulletController : MonoBehaviour
+    public class BulletController : AttackObject
     {
         void OnCollisionEnter2D(Collision2D collision)
         {
