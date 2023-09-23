@@ -31,7 +31,7 @@ namespace Platformer.Mechanics
 
             // あたり判定オブジェクト生成
             GameObject closeAttack = Object.Instantiate(closeAttackPrefab, player.transform.position+offset, player.transform.rotation);
-            closeAttack.damage = damage;
+            closeAttack.GetComponent<AttackObject>().damage = damage;
 
             //飛ばす距離を渡す
             CloseAttackController cac = closeAttack.GetComponent<CloseAttackController>();
