@@ -57,7 +57,9 @@ namespace Platformer.Mechanics
             // プレイヤーに当たったら無視
             if (other.CompareTag("Bullet"))
             {
-                Schedule<EnemyDeath>().enemy = this;
+                int attackDamage = other.gameObject.GetComponent<AttackObject>().damage;
+                health.TakeDamage(attackDamage);
+                // Schedule<EnemyDeath>().enemy = this;
             }
         }
 
