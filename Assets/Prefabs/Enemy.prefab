@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 772289407653213039}
   - component: {fileID: 5843668731025413174}
   - component: {fileID: 1202285723407772319}
+  - component: {fileID: 6663273266703150576}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Enemy
@@ -183,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 0}
   ouch: {fileID: 8300000, guid: b7f741588644cd64bbee6387cb54a96d, type: 3}
+  health: {fileID: 0}
 --- !u!82 &5843668731025413174
 AudioSource:
   m_ObjectHideFlags: 0
@@ -292,3 +294,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1
+--- !u!114 &6663273266703150576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661912868639658944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24f790710f5da748bfb61731302c151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCycle: 2
+  attackRange: 8
+  bulletPrefab: {fileID: 95673568919735763, guid: c6fa16c61d0beae43b9472de52d12130,
+    type: 3}
+  target: {fileID: 0}
+  damage: 1
+  bulletSpeed: 1
