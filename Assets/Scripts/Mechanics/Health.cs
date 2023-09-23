@@ -41,11 +41,33 @@ namespace Platformer.Mechanics
         public void Decrement()
         {
             currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
+            hpZeroCheck(currentHP);
+        }
+
+        /// <summary>
+        /// ダメージHPを減らす
+        /// </summary>
+        /// <param name="damage"></param>
+        public void TakeDamage(int damage){
+            currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+            hpZeroCheck(currentHP);
+        }
+
+        /// <summary>
+        /// 現在のHPが0かチェック
+        /// </summary>
+        /// <param name="currentHP"></param>
+        private void hpZeroCheck(int currentHP){
             if (currentHP == 0)
             {
-                var ev = Schedule<HealthIsZero>();
-                ev.health = this;
-                //Schedule<PlayerDeath>();
+                if(gameObject.CompareTag("Player")){
+                    var ev = Schedule<HealthIsZero>();
+                    ev.health = this;
+                    //Schedule<PlayerDeath>();
+                } else if(gameObject.CompareTag("Enemy")){
+                    var ev = Schedule<EnemyDeath>();
+                    ev.enemy = gameObject.GetComponent<EnemyController>();
+                }
             }
         }
 
