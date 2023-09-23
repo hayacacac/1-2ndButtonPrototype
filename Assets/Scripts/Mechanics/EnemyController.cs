@@ -23,12 +23,15 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => _collider.bounds;
 
+        public Health health;
+
         void Awake()
         {
             control = GetComponent<AnimationController>();
             _collider = GetComponent<Collider2D>();
             _audio = GetComponent<AudioSource>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            health = GetComponent<Health>();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -43,7 +46,9 @@ namespace Platformer.Mechanics
                     ev.enemy = this;
                 }
             } else if (collisionTag == "Bullet"){
-                Schedule<EnemyDeath>().enemy = this;
+                int attackDamage = collision.gameObject.GetComponent<AttackObject>().damage;
+                health.TakeDamage(attackDamage);
+                //Schedule<EnemyDeath>().enemy = this;
             }
             
         }
@@ -52,7 +57,9 @@ namespace Platformer.Mechanics
             // プレイヤーに当たったら無視
             if (other.CompareTag("Bullet"))
             {
-                Schedule<EnemyDeath>().enemy = this;
+                int attackDamage = other.gameObject.GetComponent<AttackObject>().damage;
+                health.TakeDamage(attackDamage);
+                // Schedule<EnemyDeath>().enemy = this;
             }
         }
 

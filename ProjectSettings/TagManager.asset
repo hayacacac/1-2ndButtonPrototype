@@ -9,6 +9,7 @@ TagManager:
   - Muteki
   - Cinemachine
   - Enemy
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

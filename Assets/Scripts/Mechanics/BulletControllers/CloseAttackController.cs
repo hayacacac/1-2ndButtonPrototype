@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Platformer.Mechanics
 {
-    public class CloseAttackController : MonoBehaviour
+    public class CloseAttackController : AttackObject
     {
         // オブジェクトの初期位置を保存する変数
         private Vector3 initialPosition;

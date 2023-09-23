@@ -14,6 +14,8 @@ namespace Platformer.Mechanics
         float attackSpeed = 3f;
         [SerializeField]
         float attackRange = 0.5f;
+        [SerializeField]
+        int damage = 1;
         
         public override void Perform(PlayerController player){
             //攻撃開始位置のオフセット
@@ -29,6 +31,7 @@ namespace Platformer.Mechanics
 
             // あたり判定オブジェクト生成
             GameObject closeAttack = Object.Instantiate(closeAttackPrefab, player.transform.position+offset, player.transform.rotation);
+            closeAttack.GetComponent<AttackObject>().damage = damage;
 
             //飛ばす距離を渡す
             CloseAttackController cac = closeAttack.GetComponent<CloseAttackController>();
