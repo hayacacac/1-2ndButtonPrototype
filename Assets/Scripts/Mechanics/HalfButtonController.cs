@@ -47,7 +47,8 @@ namespace Platformer.Mechanics
         [Header("Cooldown")]
         public float cooldownTime = 5f;
         private float cooldownTimer = 0f;
-        public TMP_Text cooldownTextUI;
+        [SerializeField]
+        private HalfButtonUIController halfButtonUI;
 
         // Start is called before the first frame update
         void Start()
@@ -70,12 +71,15 @@ namespace Platformer.Mechanics
 
         // クールダウンの計算
         private void UpdateCooldownTimer(){
+            float cooldownRemainingRatio = 0f;
             if(isCooldown){
                 cooldownTimer = Mathf.Clamp(cooldownTimer-Time.deltaTime, 0, cooldownTime);
-                cooldownTextUI.text = "Button"+ buttonNumber.ToString() +": Cooldown " + cooldownTimer.ToString("F3") + "sec";
-            } else {
-                cooldownTextUI.text = "Button"+ buttonNumber.ToString() +": Available";
+
+                // クールダウンの経過割合を計算
+                cooldownRemainingRatio = Mathf.InverseLerp(0f, cooldownTime, cooldownTimer);
             }
+
+            halfButtonUI.SetMaskRatio(1f-cooldownRemainingRatio);
         }
 
         // 2分の1ボタンの処理

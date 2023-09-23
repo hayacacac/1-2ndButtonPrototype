@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Platformer.UI
+namespace Platformer.Mechanics
 {
     /// <summary>
     /// HPのUIに関する処理のクラス

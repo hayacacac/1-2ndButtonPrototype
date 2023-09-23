@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Platformer.UI
+namespace Platformer.Mechanics
 {
     /// <summary>
     /// スクリプトからマスクのサイズを変えて、UIゲージを増減させるクラス
