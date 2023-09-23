@@ -20,7 +20,8 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            var willHurtEnemy = player.Bounds.center.y >= enemy.Bounds.max.y;
+            //var willHurtEnemy = player.Bounds.center.y >= enemy.Bounds.max.y;
+            var willHurtEnemy = false; // 敵を踏んで倒せないようにする
 
             if (willHurtEnemy)
             {
@@ -48,6 +49,7 @@ namespace Platformer.Gameplay
             {
                 //Schedule<PlayerDeath>();
                 player.health.Decrement();
+                player.Bounce(4);
             }
         }
     }
