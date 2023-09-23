@@ -12,6 +12,8 @@ namespace Platformer.Mechanics
         public GameObject bulletPrefab;
         [SerializeField]
         float bulletSpeed = 10f; //弾丸の射出速度
+        [SerializeField]
+        int damage = 1;
 
         public override void Perform(PlayerController player){
             //弾丸生成位置のオフセット
@@ -27,6 +29,7 @@ namespace Platformer.Mechanics
 
             //弾丸生成と発射
             GameObject bullet = Object.Instantiate(bulletPrefab, player.transform.position+offset, player.transform.rotation);
+            bullet.damage = damage;
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(player.transform.right * speed, ForceMode2D.Impulse);
         }
