@@ -5,15 +5,19 @@ using UnityEngine;
 namespace Platformer.Mechanics
 {
     /// <summary>
-    /// 何かに当たったら消える弾
+    /// プレイヤーが攻撃に使う弾のクラス
     /// </summary>
     public class BulletController : AttackObject
     {
-        void OnCollisionEnter2D(Collision2D collision)
+        void OnTriggerEnter2D(Collider2D other)
         {
-            Destroy(this.gameObject);            
+            // プレイヤーに当たったら無視、Cinemachineのコライダも無視
+            if (other.CompareTag("Player") || other.CompareTag("Muteki") || other.CompareTag("Bullet") || other.CompareTag("EnemyBullet") || other.CompareTag("Cinemachine"))
+            {
+                return;
+            }
+
+            Destroy(this.gameObject); 
         }
     }
-
 }
-

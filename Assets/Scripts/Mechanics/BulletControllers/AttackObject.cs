@@ -6,6 +6,7 @@ namespace Platformer.Mechanics
 {
     public class AttackObject : MonoBehaviour
     {
+        [System.NonSerialized]
         public int damage;
         // Start is called before the first frame update
         void Start()

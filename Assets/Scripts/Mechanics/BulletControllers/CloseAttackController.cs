@@ -9,6 +9,7 @@ namespace Platformer.Mechanics
         // オブジェクトの初期位置を保存する変数
         private Vector3 initialPosition;
         //移動距離
+        [System.NonSerialized]
         public float range = 0;
 
         // スクリプトの開始時に初期位置を保存
@@ -25,12 +26,11 @@ namespace Platformer.Mechanics
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            // プレイヤーに当たったら無視
-            if (other.CompareTag("Player") || other.CompareTag("Muteki") || other.CompareTag("Cinemachine"))
+            // プレイヤーに当たったら無視、Cinemachineのコライダも無視
+            if (other.CompareTag("Player") || other.CompareTag("Muteki") || other.CompareTag("Bullet") || other.CompareTag("EnemyBullet") || other.CompareTag("Cinemachine"))
             {
                 return;
             }
-            Debug.Log(other.gameObject.name);
 
             Destroy(this.gameObject); 
         }
