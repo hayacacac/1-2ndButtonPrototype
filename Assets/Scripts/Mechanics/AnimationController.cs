@@ -36,6 +36,8 @@ namespace Platformer.Mechanics
         /// </summary>
         public bool stopJump;
 
+        public bool isFloatingCharacter = false;
+
         SpriteRenderer spriteRenderer;
         Animator animator;
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
@@ -44,6 +46,33 @@ namespace Platformer.Mechanics
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+        }
+
+        protected override void FixedUpdate()
+        {
+            if(!isFloatingCharacter){
+                //if already falling, fall faster than the jump speed, otherwise use normal gravity.
+                if (velocity.y < 0)
+                    velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+                else
+                    velocity += Physics2D.gravity * Time.deltaTime;
+            }
+
+            velocity.x = targetVelocity.x;
+
+            IsGrounded = false;
+
+            var deltaPosition = velocity * Time.deltaTime;
+
+            var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+
+            var move = moveAlongGround * deltaPosition.x;
+
+            PerformMovement(move, false);
+
+            move = Vector2.up * deltaPosition.y;
+
+            PerformMovement(move, true);
         }
 
         protected override void ComputeVelocity()
