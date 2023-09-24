@@ -21,13 +21,14 @@ namespace Platformer.Mechanics
         void Start()
         {
             initialPosition = transform.position;
+            Destroy(this.gameObject, 0.6f);
         }
 
         void Update(){
             Vector3 currentPos = transform.position;
             transform.position = new Vector3(currentPos.x, player.position.y+offsetY, currentPos.z);
             if(Vector3.Distance(initialPosition, transform.position) >= range){
-                Destroy(this.gameObject); 
+                Destroy(this.gameObject);
             }
         }
 
