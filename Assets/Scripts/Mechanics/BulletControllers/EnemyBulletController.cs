@@ -9,6 +9,9 @@ namespace Platformer.Mechanics
     /// </summary>
     public class EnemyBulletController : AttackObject
     {
+        public GameObject collisionEffect;
+        [SerializeField]
+
         void OnTriggerEnter2D(Collider2D other)
         {
             // 敵、弾、Cinemachineのコライダも無視
@@ -17,6 +20,8 @@ namespace Platformer.Mechanics
                 return;
             }
 
+            GameObject effect = Object.Instantiate(collisionEffect, this.transform.position, this.transform.rotation);
+            Destroy(effect.gameObject, 1);
             Destroy(this.gameObject); 
         }
     }
