@@ -24,7 +24,7 @@ namespace Platformer.UI
 
         void Update()
         {
-            if (Input.anyKeyDown && !isPushed)
+            if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !isPushed)
             {
                 sceneTransition.StartFadeTransition(fadePanel);
                 isPushed = true;
