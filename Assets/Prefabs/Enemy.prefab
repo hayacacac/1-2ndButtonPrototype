@@ -170,6 +170,7 @@ MonoBehaviour:
   move: {x: 0, y: 0}
   jump: 0
   stopJump: 0
+  isFloatingCharacter: 0
 --- !u!114 &772289407653213039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1
+  uiVibration: {fileID: 0}
 --- !u!114 &6663273266703150576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +303,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661912868639658944}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e24f790710f5da748bfb61731302c151, type: 3}
   m_Name: 
