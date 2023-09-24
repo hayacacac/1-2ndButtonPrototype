@@ -165,11 +165,12 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   gravityModifier: 1
   velocity: {x: 0, y: 0}
-  maxSpeed: 7
+  maxSpeed: 5
   jumpTakeOffSpeed: 7
   move: {x: 0, y: 0}
   jump: 0
   stopJump: 0
+  isFloatingCharacter: 0
 --- !u!114 &772289407653213039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1
+  uiVibration: {fileID: 0}
 --- !u!114 &6663273266703150576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCycle: 2
-  attackRange: 8
+  attackRange: 0
   bulletPrefab: {fileID: 95673568919735763, guid: c6fa16c61d0beae43b9472de52d12130,
     type: 3}
   target: {fileID: 0}
