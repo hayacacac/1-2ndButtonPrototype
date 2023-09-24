@@ -10,6 +10,7 @@ TagManager:
   - Cinemachine
   - Enemy
   - EnemyBullet
+  - Boss
   layers:
   - Default
   - TransparentFX
