@@ -175,12 +175,12 @@ namespace Platformer.Mechanics
             return spriteRenderer.flipX;
         }
 
-        void OnCollisionEnter2D(Collision2D collision){
-            string collisionTag = collision.gameObject.tag;
+        void OnTriggerEnter2D(Collider2D other){
+            string collisionTag = other.gameObject.tag;
 
             // 敵の弾に当たったらダメージをくらう
             if (collisionTag == "EnemyBullet"){
-                var enemyAttack = collision.gameObject.GetComponent<AttackObject>();
+                var enemyAttack = other.gameObject.GetComponent<AttackObject>();
                 health.TakeDamage(enemyAttack.damage);
                 Muteki(3f);
             }
