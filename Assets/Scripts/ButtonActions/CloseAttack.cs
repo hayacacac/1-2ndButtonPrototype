@@ -28,7 +28,7 @@ namespace Platformer.Mechanics
 
             //左向きの時は攻撃方向を逆にする
             if (player.getterFlipX()){
-                offsetX *= -1;
+                offsetX = offsetX * (-1) - new Vector3(0.25f,0,0);
                 speed *= -1;
             }
 
