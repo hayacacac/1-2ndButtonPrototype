@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e9763ba1c925f49afeeadd53acc944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionEffect: {fileID: 6577521524462926207, guid: e048ebaaea406144784dccf374a893c1,
+    type: 3}
 --- !u!95 &-4263064296705105789
 Animator:
   serializedVersion: 5
