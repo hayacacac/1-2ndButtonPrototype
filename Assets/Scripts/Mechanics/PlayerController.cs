@@ -96,6 +96,7 @@ namespace Platformer.Mechanics
 
         //無敵状態にする
         public void Muteki(float mutekiTimeSec){
+            if(isMuteki) return;
             StartCoroutine(MutekiCoroutine(mutekiTimeSec));
         }
         
@@ -106,6 +107,18 @@ namespace Platformer.Mechanics
             yield return new WaitForSeconds(mutekiTimeSec);
             this.gameObject.tag = "Player";
             isMuteki = false;
+        }
+
+        // ガード
+        public void Guard(float guardTimeSec){
+            StartCoroutine(guardCoroutine(guardTimeSec));
+        }
+        
+        //無敵状態にする時間を制御するコルーチン
+        IEnumerator guardCoroutine(float mutekiTimeSec){
+            this.gameObject.tag = "Muteki";
+            yield return new WaitForSeconds(mutekiTimeSec);
+            this.gameObject.tag = "Player";
         }
 
         private void UpdateHealthUI(){
@@ -179,7 +192,7 @@ namespace Platformer.Mechanics
             string collisionTag = other.gameObject.tag;
 
             // 敵の弾に当たったらダメージをくらう
-            if (collisionTag == "EnemyBullet"){
+            if (collisionTag == "EnemyBullet" && isMuteki == false){
                 var enemyAttack = other.gameObject.GetComponent<AttackObject>();
                 health.TakeDamage(enemyAttack.damage);
                 Muteki(3f);

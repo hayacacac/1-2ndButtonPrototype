@@ -12,7 +12,7 @@ namespace Platformer.Mechanics
         void OnTriggerEnter2D(Collider2D other)
         {
             // 敵、弾、Cinemachineのコライダも無視
-            if (other.CompareTag("Enemy") || other.CompareTag("Bullet") || other.CompareTag("EnemyBullet") || other.CompareTag("Cinemachine"))
+            if (other.CompareTag("Enemy") || other.CompareTag("Muteki") || other.CompareTag("Bullet") || other.CompareTag("EnemyBullet") || other.CompareTag("Cinemachine"))
             {
                 return;
             }
