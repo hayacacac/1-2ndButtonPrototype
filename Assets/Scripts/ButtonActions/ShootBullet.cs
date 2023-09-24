@@ -16,6 +16,8 @@ namespace Platformer.Mechanics
         int damage = 1;
 
         public override void Perform(PlayerController player){
+            base.Perform(player);
+
             //弾丸生成位置のオフセット
             Vector3 offset = new Vector3(0.5f,0,0);
             // 左向きのときの斑点が複数かからないように毎回スピードを初期化

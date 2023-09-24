@@ -38,6 +38,8 @@ namespace Platformer.Mechanics
         private PlayerController playerController;
 
         public override void Perform(PlayerController player){
+            base.Perform(player);
+
             dashDirectionVector = GetDirectionVector(dashDirection);
 
             // キャラのスプライトが反転していたらx成分を反転

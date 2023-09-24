@@ -19,6 +19,8 @@ namespace Platformer.Mechanics
         Vector3 offsetY = new Vector3(0,-0.5f,0);
         
         public override void Perform(PlayerController player){
+            base.Perform(player);
+
             //攻撃開始位置のオフセット
             Vector3 offsetX = new Vector3(0.25f,0,0);
             // 左向きのときの斑点が複数かからないように毎回スピードを初期化
