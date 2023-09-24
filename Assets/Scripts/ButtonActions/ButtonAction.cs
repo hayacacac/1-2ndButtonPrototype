@@ -9,6 +9,10 @@ namespace Platformer.Mechanics
     /// </summary>
     public class ButtonAction : MonoBehaviour
     {
-        public virtual void Perform(PlayerController player){}
+        public Animator animator;
+        public string animationName;
+        public virtual void Perform(PlayerController player){
+            if(animator != null) animator.SetBool(animationName, true);
+        }
     }
 }

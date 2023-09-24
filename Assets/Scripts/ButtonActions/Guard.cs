@@ -14,6 +14,8 @@ namespace Platformer.Mechanics
         float shieldTimeSec = 3f;
         
         public override void Perform(PlayerController player){
+            base.Perform(player);
+
             //盾生成位置のオフセット
             Vector3 offset = new Vector3(0.0f,-0.5f,0);
             GameObject shield = Object.Instantiate(shieldPrefab, player.transform.position+offset, player.transform.rotation, player.gameObject.transform);
