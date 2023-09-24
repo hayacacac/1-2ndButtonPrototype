@@ -43,7 +43,9 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
-        public TMP_Text healthTextUI;
+        //public TMP_Text healthTextUI;
+        [SerializeField]
+        private HealthUIController healthUI;
         private bool isMuteki;
         private float mutekiCycle = 0.5f; //無敵時の点滅周期
         private float mutekiTimer = 0f;
@@ -107,7 +109,9 @@ namespace Platformer.Mechanics
         }
 
         private void UpdateHealthUI(){
-            healthTextUI.text = "HP: " + health.getCurrentHP().ToString();
+            //healthTextUI.text = "HP: " + health.getCurrentHP().ToString();
+            float hpRatio = Mathf.InverseLerp(0f, health.maxHP, health.getCurrentHP());
+            healthUI.SetMaskRatio(hpRatio);
         }
 
         void UpdateJumpState()

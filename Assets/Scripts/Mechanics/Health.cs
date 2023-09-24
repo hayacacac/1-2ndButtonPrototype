@@ -22,6 +22,8 @@ namespace Platformer.Mechanics
 
         int currentHP;
 
+        public UIVibration uiVibration;
+
         public int getCurrentHP(){
             return currentHP;
         }
@@ -41,6 +43,7 @@ namespace Platformer.Mechanics
         public void Decrement()
         {
             currentHP = Mathf.Clamp(currentHP - 1, 0, maxHP);
+            if (uiVibration != null) uiVibration.StartVibration();
             hpZeroCheck(currentHP);
         }
 
@@ -50,6 +53,7 @@ namespace Platformer.Mechanics
         /// <param name="damage"></param>
         public void TakeDamage(int damage){
             currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+            if (uiVibration != null) uiVibration.StartVibration();
             hpZeroCheck(currentHP);
         }
 
