@@ -16,7 +16,7 @@ namespace Platformer.Mechanics
         float attackRange = 0.5f;
         [SerializeField]
         int damage = 1;
-        Vector3 offsetY = new Vector3(0,-0.7f,0);
+        public Vector3 offsetY = new Vector3(0,-0.7f,0);
         
         public override void Perform(PlayerController player){
             base.Perform(player);
