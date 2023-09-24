@@ -16,6 +16,11 @@ namespace Platformer.Mechanics
             rb = GetComponent<Rigidbody2D>();
         }
         void Update(){
+
+        }
+
+        void FixedUpdate()
+        {
             if (rb.velocity.magnitude > 0.01f)
             {
                 rb.velocity -= rb.velocity.normalized * slowdownRate * Time.fixedDeltaTime;
@@ -25,6 +30,7 @@ namespace Platformer.Mechanics
                 rb.velocity = Vector2.zero;
             }
         }
+
         void OnTriggerEnter2D(Collider2D other)
         {
             // 敵、弾、Cinemachineのコライダも無視

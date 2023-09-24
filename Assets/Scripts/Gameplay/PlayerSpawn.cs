@@ -1,6 +1,7 @@
 using Platformer.Core;
 using Platformer.Mechanics;
 using Platformer.Model;
+using UnityEngine;
 
 namespace Platformer.Gameplay
 {
@@ -14,12 +15,14 @@ namespace Platformer.Gameplay
         public override void Execute()
         {
             var player = model.player;
+            EnemyController enemy = GameObject.Find("BOSS").GetComponent<EnemyController>();
             player.collider2d.enabled = true;
             player.controlEnabled = false;
             if (player.audioSource && player.respawnAudio)
                 player.audioSource.PlayOneShot(player.respawnAudio);
             //player.health.Increment();
             player.health.SetFullHP();
+            enemy.health.SetFullHP();
             player.Teleport(model.spawnPoint.transform.position);
             player.jumpState = PlayerController.JumpState.Grounded;
             player.animator.SetBool("dead", false);
