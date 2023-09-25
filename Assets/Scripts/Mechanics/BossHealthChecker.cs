@@ -17,6 +17,8 @@ namespace Platformer.Mechanics
         void Update()
         {
             if(bossHealth.getCurrentHP() == 0) {
+                PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+                player.controlEnabled = false;
                 VictoryZone.SetActive(true);
             }
         }
