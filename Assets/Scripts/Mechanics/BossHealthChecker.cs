@@ -9,6 +9,7 @@ namespace Platformer.Mechanics
     {
         public GameObject VictoryZone;
         private Health bossHealth;
+        public AudioClip fanfare;
         bool banpei = false;
         public string transitionDestination = "TitleScene";
 
@@ -35,6 +36,11 @@ namespace Platformer.Mechanics
                 PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
                 player.controlEnabled = false;
                 if(!banpei){
+                    AudioSource audioSource = GameObject.Find("GameController").GetComponent<AudioSource>();
+                    audioSource.loop = false;
+                    if (audioSource && fanfare)
+                        audioSource.clip = fanfare;
+                        audioSource.Play();
                     Invoke("clearTweet", 7.0f);
                     Invoke("trasitionTitle", 15.0f);
                     banpei = true;
