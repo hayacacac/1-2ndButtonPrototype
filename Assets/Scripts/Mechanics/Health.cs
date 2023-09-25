@@ -59,6 +59,8 @@ namespace Platformer.Mechanics
             currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
             if (uiVibration != null) uiVibration.StartVibration();
             hpZeroCheck(currentHP);
+            var ev = Schedule<BossHurt>();
+            ev.enemy = gameObject.GetComponent<EnemyController>();
         }
 
         /// <summary>

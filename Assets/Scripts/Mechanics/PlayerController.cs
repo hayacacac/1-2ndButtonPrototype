@@ -46,7 +46,7 @@ namespace Platformer.Mechanics
         //public TMP_Text healthTextUI;
         [SerializeField]
         private HealthUIController healthUI;
-        private bool isMuteki;
+        public bool isMuteki;
         private float mutekiCycle = 0.5f; //無敵時の点滅周期
         private float mutekiTimer = 0f;
         void Awake()
@@ -195,6 +195,7 @@ namespace Platformer.Mechanics
             if (collisionTag == "EnemyBullet" && isMuteki == false){
                 var enemyAttack = other.gameObject.GetComponent<AttackObject>();
                 health.TakeDamage(enemyAttack.damage);
+                Schedule<PlayerHurt>().player = this;
                 Muteki(3f);
             }
         }

@@ -184,7 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 0}
-  ouch: {fileID: 0}
+  ouch: {fileID: 8300000, guid: e9b687cfa3f9fad4c8bb75483d429c97, type: 3}
+  damageAudio: {fileID: 0}
   health: {fileID: 0}
 --- !u!82 &5843668731025413174
 AudioSource:
@@ -198,7 +199,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.393
   m_Pitch: 1
   Loop: 0
   Mute: 0

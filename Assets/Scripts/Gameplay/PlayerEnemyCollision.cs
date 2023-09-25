@@ -48,9 +48,15 @@ namespace Platformer.Gameplay
             else
             {
                 //Schedule<PlayerDeath>();
-                player.health.Decrement();
-                player.Muteki(3f);
-                player.Bounce(4);
+                if(!player.isMuteki){
+                    player.health.Decrement();
+                
+                    if (player.audioSource && player.ouchAudio)
+                        player.audioSource.PlayOneShot(player.ouchAudio);
+                
+                    player.Muteki(3f);
+                    player.Bounce(4);
+                }
             }
         }
     }
