@@ -13,6 +13,13 @@ namespace Platformer.Mechanics
         private GameController gameController;
         private Transform spawnPoint;
         bool isTouched;
+        public AudioClip checkAudio;
+        public AudioSource audioSource;
+
+        void Awake()
+        {    
+            audioSource = GetComponent<AudioSource>();
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -25,6 +32,7 @@ namespace Platformer.Mechanics
             if (!isTouched && (other.CompareTag("Player") || other.CompareTag("Muteki")))
             {
                 gameController.model.spawnPoint = this.transform;
+                audioSource.PlayOneShot(checkAudio);
                 isTouched = true;
             }
         }
